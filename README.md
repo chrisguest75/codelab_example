@@ -1,18 +1,21 @@
 # README.md
+This repo demonstrates how to create your own CodeLabs and add them to self-hostable container. 
+
+Prerequisites: Docker 
+
+## Building
+To build the container with the example codelabs. 
 
 ```
-docker build -t codelabs_base:latest -f- git@github.com:chrisguest75/codelab-tools-fork.git <<< $(cat Dockerfile)
+./build_codelabs.sh
 ```
 
-```
-docker run -it --entrypoint /bin/bash codelabs_base:latest
-```
+## How it works
+The default is configured to use my fork of the CodeLabs project.
 
-```
-docker run -it -v $(pwd)/dist:/output -v $(pwd)/labs:/codelabs/site/codelabs --entrypoint /bin/bash codelabs_base:latest 
-```
+It uses the funky git based docker context with the Dockerfile in the repo.  
+This installs some prerequisites tools for building the labs.  
 
-```
-docker run -d --rm -p 8000:80 --name condelabs condelabs 
-open http://localhost:8000/
-```
+It requires the [process-labs.sh](labs/process-labs.sh) script to convert the markdown.  
+
+The output in the ./dist folder is then put into a container hosting static content.
