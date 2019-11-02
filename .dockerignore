@@ -1,6 +1,6 @@
 # Ignore all the folders
-**
+#*
 
 # Only dist will be in context
-!/dist
+#!/dist
 
