@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker stop "$(docker ps -aqf "name=codelab")"
+docker stop "$(docker ps -aqf "name=codelabs")"

@@ -15,6 +15,9 @@ cp ./assets/logo.png ../app/images/logo.png
 
 cat ./assets/extra_styles.css >> ../app/styles/_categories.scss
 
+sed -i 's/Welcome to Codelabs!/Welcome to Chrislabs!/g' ../app/views/default/index.html
+sed -i 's/Codelabs provide a guided/Chrislabs provide a guided/g' ../app/views/default/index.html
+
 #*************************************************
 # Modify the site folder above here
 #*************************************************
