@@ -1,0 +1,3 @@
+
+@include codelab-card(['terraform'], #00FC23, 'terraform.png');
+@include codelab-card(['coreplatform'], #0023FC, 'core_platform.png');

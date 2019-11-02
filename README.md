@@ -4,7 +4,13 @@ This repo demonstrates how to create your own CodeLabs and add them to self-host
 Prerequisites: Docker 
 
 ## Building
-To build the container with the example codelabs. 
+To build the base container used to build the example codelabs. 
+
+```
+./build_base.sh
+```
+
+To rebuild the codelabs using the base container
 
 ```
 ./build_codelabs.sh

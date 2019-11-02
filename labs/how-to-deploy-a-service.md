@@ -1,6 +1,6 @@
 summary: How to deploy a service
 id: how-to-deploy-a-service
-categories: deployment
+categories: coreplatform
 tags: build 
 status: Published 
 authors: ChrisGuest
