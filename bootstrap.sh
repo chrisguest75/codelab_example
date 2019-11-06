@@ -4,22 +4,10 @@ if [ -z "$PORT" ];then
     PORT=8080
 fi
 echo "PORT=$PORT"
+export PORT=$PORT
 
-cat <<EOF > /etc/nginx/conf.d/default.conf
-server { \
-listen       $PORT; \
-server_name  localhost; \
-location / { \
-root   /usr/share/nginx/html; \
-index  index.html index.htm; \
-} \
-# redirect server error pages to the static page /50x.html \
-error_page   500 502 503 504  /50x.html; \
-location = /50x.html { \
-root   /usr/share/nginx/html; \
-} \
-} \
-EOF
+./write-config > /etc/nginx/conf.d/default.conf 
 
-cat /etc/nginx/conf.d/default.conf
+cat /etc/nginx/conf.d/default.conf 
 
+nginx -g "daemon off;"

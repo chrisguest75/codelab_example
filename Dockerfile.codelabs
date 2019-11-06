@@ -5,22 +5,9 @@ RUN ./process-labs.sh
 FROM nginx:1.16.1 as final
 COPY --from=base /output /usr/share/nginx/html
 
-
-# RUN echo 'server {\n\
-# listen       8080;\n\
-# server_name  localhost;\n\
-# location / { \n\
-# root   /usr/share/nginx/html;\n\
-# index  index.html index.htm;\n\
-# }\n\
-# # redirect server error pages to the static page /50x.html \n\
-# error_page   500 502 503 504  /50x.html;\n\
-# location = /50x.html {\n\
-# root   /usr/share/nginx/html;\n\
-# }\n\
-# }\n\
-# \n'\
-# > /etc/nginx/conf.d/default.conf
-
 COPY bootstrap.sh /work/bootstrap.sh
+
+COPY build-config.sh /work/build-config.sh
+COPY ./write-config/write-config /work/write-config
+WORKDIR /work
 CMD ["/bin/sh", "-c", "/work/bootstrap.sh"]
