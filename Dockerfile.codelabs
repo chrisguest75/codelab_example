@@ -6,8 +6,6 @@ FROM nginx:1.16.1 as final
 COPY --from=base /output /usr/share/nginx/html
 
 COPY bootstrap.sh /work/bootstrap.sh
-
-COPY build-config.sh /work/build-config.sh
 COPY ./write-config/write-config /work/write-config
 WORKDIR /work
 CMD ["/bin/sh", "-c", "/work/bootstrap.sh"]
