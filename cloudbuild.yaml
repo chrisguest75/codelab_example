@@ -14,6 +14,7 @@ steps:
     ls -la
     echo ${_GITHUB_USERNAME}
     echo ${_TWO_PART_VERSION}
+    
 # Decrypt the ssh key.
 - name: 'gcr.io/open-source-01/custom_cloudbuild_sshkeys:0.0.5'
   entrypoint: '/workbench/decrypt.sh'
@@ -32,19 +33,33 @@ steps:
   - name: 'ssh'
     path: /root/.ssh
 
+# Build the base image
+# push the base image?
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: /bin/bash
+  args:
+  - '-c'
+  - |
+    pwd
+    ls -la
+    cd $REPO_NAME
+    git clone https://github.com/chrisguest75/codelab-tools-fork
+    cp Dockerfile ./codelab-tools-fork/Dockerfile
+    cd ./codelab-tools-fork
+
 # Build the dockerfile with the latest cloned code.  
 - name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
   args:
-  - 'build'
-  - '--tag=codelabs_base:latest'
-  - '-f- git@github.com:chrisguest75/codelab-tools-fork.git <<< $(cat Dockerfile)'
+  - '-c'
+  - |
+    cd $REPO_NAME
+    pwd
+    ls -la
+    docker build -t codelabs_base:latest .
 
   # TODO: This has an issue that it might have had another commit since build trigger.  
   #- './$REPO_NAME/hellonode'
-
-
-
-
 
 
 # Retag latest with git sha 
