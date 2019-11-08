@@ -55,7 +55,7 @@ steps:
   args:
   - '-c'
   - |
-    cd $REPO_NAME
+    cd $REPO_NAME/codelab-tools-fork
     pwd
     ls -la
     docker build -t codelabs_base:latest .
