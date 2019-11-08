@@ -3,6 +3,10 @@
 echo "process-labs.sh"
 pwd 
 ls -a
+echo "root path"
+ls -a /
+echo "parent path"
+ls -a ../
 
 echo "Process markdown files"
 for f in *.md; do 
