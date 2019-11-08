@@ -3,6 +3,7 @@ substitutions:
   _GITHUB_USERNAME: "chrisguest75" 
   #_CONTAINER_SUBFOLDER: "codelabs" 
 
+timeout: "1200.0s"
 steps:
 # Show some debug info - current state of folder.
 - name: 'gcr.io/cloud-builders/git'
