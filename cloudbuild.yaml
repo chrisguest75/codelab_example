@@ -14,7 +14,7 @@ steps:
     ls -la
     echo ${_GITHUB_USERNAME}
     echo ${_TWO_PART_VERSION}
-    
+
 # Decrypt the ssh key.
 - name: 'gcr.io/open-source-01/custom_cloudbuild_sshkeys:0.0.5'
   entrypoint: '/workbench/decrypt.sh'
@@ -60,13 +60,36 @@ steps:
 
   # TODO: This has an issue that it might have had another commit since build trigger.  
   #- './$REPO_NAME/hellonode'
-
-
 # Retag latest with git sha 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['tag',
-    'gcr.io/$PROJECT_ID/$REPO_NAME:latest',
-    'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
+    'codelabs_base:latest',
+    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:$COMMIT_SHA']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag',
+    'codelabs_base:latest',
+    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest']
+
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
+  args:
+  - '-c'
+  - |
+    cd $REPO_NAME
+    pwd
+    ls -la
+    docker build -t codelabs:latest -f Dockerfile.codelabs .    
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag',
+    'codelabs:latest',
+    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$COMMIT_SHA']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag',
+    'codelabs:latest',
+    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:latest']
 
 # Create semver tag 
 # TODO: Need to filter height from the commitid as another commit might have sneaked in after trigger fired.
@@ -87,9 +110,12 @@ steps:
   - '-c'
   - |
     cd $REPO_NAME
-    docker tag gcr.io/$PROJECT_ID/$REPO_NAME:latest gcr.io/$PROJECT_ID/$REPO_NAME:$(cat IMAGE_TAG)
-    docker push gcr.io/$PROJECT_ID/$REPO_NAME:$(cat IMAGE_TAG)
+    docker tag gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$(cat IMAGE_TAG)
+    docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$(cat IMAGE_TAG)
   
 # These are images that pushed as well
-images: ['gcr.io/$PROJECT_ID/$REPO_NAME:latest',
-        'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
+images: ['gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:latest',
+        'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$COMMIT_SHA']
+
+
+        # Retag latest with git sha 
