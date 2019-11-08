@@ -17,13 +17,18 @@ done
 # Modify the site folder below here. 
 #*************************************************
 echo "Modifying the site"
+# Copy logo
+cp ./assets/logo.png ../app/images/logo.png
+
+# Copy icons
 cp ./assets/core_platform.png ../app/images/icons/core_platform.png
 cp ./assets/terraform.png ../app/images/icons/terraform.png
-cp ./assets/logo.png ../app/images/logo.png
-cp ./assets/modules_laboratory.png ../app/images/modules_laboratory.png
+cp ./assets/modules_laboratory.png ../app/icons/modules_laboratory.png
 
+# Append css
 cat ./assets/extra_styles.css >> ../app/styles/_categories.scss
 
+# Fix landing page text
 sed -i 's/Welcome to Codelabs!/Welcome to Chrislabs!/g' ../app/views/default/index.html
 sed -i 's/Codelabs provide a guided/Chrislabs provide a guided/g' ../app/views/default/index.html
 
