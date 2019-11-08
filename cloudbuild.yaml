@@ -27,7 +27,9 @@ steps:
 # Use git clone to get private repo.
 - name: 'gcr.io/cloud-builders/git'
   args:
-  - clone
+  - clone 
+  - --branch
+  - $BRANCH_NAME
   - git@github.com:${_GITHUB_USERNAME}/$REPO_NAME
   volumes:
   - name: 'ssh'
