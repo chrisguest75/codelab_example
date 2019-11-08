@@ -1,0 +1,123 @@
+substitutions:
+  _TWO_PART_VERSION: "0.1" 
+  _GITHUB_USERNAME: "chrisguest75" 
+  #_CONTAINER_SUBFOLDER: "codelabs" 
+
+steps:
+# Show some debug info - current state of folder.
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: '/bin/bash'
+  args:
+  - '-c'
+  - |
+    pwd
+    ls -la
+    echo ${_GITHUB_USERNAME}
+    echo ${_TWO_PART_VERSION}
+
+# Decrypt the ssh key.
+- name: 'gcr.io/open-source-01/custom_cloudbuild_sshkeys:0.0.5'
+  entrypoint: '/workbench/decrypt.sh'
+  args: ['/workbench']
+  dir: '/workbench'
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# Use git clone to get private repo.
+- name: 'gcr.io/cloud-builders/git'
+  args:
+  - clone 
+  - --branch 
+  - $BRANCH_NAME
+  - git@github.com:${_GITHUB_USERNAME}/$REPO_NAME
+  volumes:
+  - name: 'ssh'
+    path: /root/.ssh
+
+# Build the base image
+# push the base image?
+- name: 'gcr.io/cloud-builders/git'
+  entrypoint: /bin/bash
+  args:
+  - '-c'
+  - |
+    pwd
+    ls -la
+    cd $REPO_NAME
+    git clone https://github.com/chrisguest75/codelab-tools-fork
+    cp Dockerfile ./codelab-tools-fork/Dockerfile
+    cd ./codelab-tools-fork
+
+# Build the dockerfile with the latest cloned code.  
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
+  args:
+  - '-c'
+  - |
+    cd $REPO_NAME/codelab-tools-fork
+    pwd
+    ls -la
+    docker build -t codelabs_base:latest .
+
+  # TODO: This has an issue that it might have had another commit since build trigger.  
+  #- './$REPO_NAME/hellonode'
+# Retag latest with git sha 
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag',
+    'codelabs_base:latest',
+    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:$COMMIT_SHA']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag',
+    'codelabs_base:latest',
+    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest']
+
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
+  args:
+  - '-c'
+  - |
+    cd $REPO_NAME
+    pwd
+    ls -la
+    docker build -t codelabs:latest -f Dockerfile.codelabs .    
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag',
+    'codelabs:latest',
+    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$COMMIT_SHA']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag',
+    'codelabs:latest',
+    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:latest']
+
+# Create semver tag 
+# TODO: Need to filter height from the commitid as another commit might have sneaked in after trigger fired.
+- name: gcr.io/cloud-builders/git
+  entrypoint: /bin/bash
+  args:
+  - '-c'
+  - |
+    cd $REPO_NAME
+    pwd
+    ls -la
+    echo ${_TWO_PART_VERSION}.$(git rev-list --count ${BRANCH_NAME}) > IMAGE_TAG
+  
+# Push semver image - should all be cached
+- name: gcr.io/cloud-builders/docker
+  entrypoint: /bin/bash
+  args:
+  - '-c'
+  - |
+    cd $REPO_NAME
+    docker tag gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$(cat IMAGE_TAG)
+    docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$(cat IMAGE_TAG)
+  
+# These are images that pushed as well
+images: ['gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:latest',
+        'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$COMMIT_SHA']
+
+
+        # Retag latest with git sha 

@@ -2,5 +2,15 @@ FROM codelabs_base:latest as base
 COPY ./labs /codelabs/site/codelabs
 RUN ./process-labs.sh
 
+FROM golang:latest as golang
+COPY ./write-config/write-config.go /work/write-config.go
+WORKDIR /work
+RUN go build -v write-config.go
+
 FROM nginx:1.16.1 as final
 COPY --from=base /output /usr/share/nginx/html
+
+COPY bootstrap.sh /work/bootstrap.sh
+COPY --from=golang /work/write-config /work/write-config
+WORKDIR /work
+CMD ["/bin/sh", "-c", "/work/bootstrap.sh"]
