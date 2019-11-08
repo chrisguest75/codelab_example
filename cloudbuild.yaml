@@ -28,8 +28,7 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   args:
   - clone 
-  - --branch
-  - $BRANCH_NAME
+  - --branch $BRANCH_NAME
   - git@github.com:${_GITHUB_USERNAME}/$REPO_NAME
   volumes:
   - name: 'ssh'
