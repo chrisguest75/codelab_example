@@ -59,21 +59,14 @@ steps:
     cd $REPO_NAME/codelab-tools-fork
     pwd
     ls -la
-    docker build -t codelabs_base:latest .
+    docker build --cache-from=gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest -t codelabs_base:latest .
+    docker tag codelabs_base:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest
+    docker tag codelabs_base:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:$COMMIT_SHA
+    docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest)
 
   # TODO: This has an issue that it might have had another commit since build trigger.  
-  #- './$REPO_NAME/hellonode'
-# Retag latest with git sha 
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag',
-    'codelabs_base:latest',
-    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:$COMMIT_SHA']
 
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag',
-    'codelabs_base:latest',
-    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest']
-
+# This uses the base image
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
   args:
@@ -83,16 +76,8 @@ steps:
     pwd
     ls -la
     docker build -t codelabs:latest -f Dockerfile.codelabs .    
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag',
-    'codelabs:latest',
-    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$COMMIT_SHA']
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag',
-    'codelabs:latest',
-    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:latest']
+    docker tag codelabs:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:latest
+    docker tag codelabs:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$COMMIT_SHA
 
 # Create semver tag 
 # TODO: Need to filter height from the commitid as another commit might have sneaked in after trigger fired.
@@ -117,7 +102,8 @@ steps:
     docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$(cat IMAGE_TAG)
   
 # These are images that pushed as well
-images: ['gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:latest',
+images: [gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest',
+        'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:latest',
         'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$COMMIT_SHA']
 
 
