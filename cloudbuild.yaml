@@ -59,7 +59,7 @@ steps:
     cd $REPO_NAME/codelab-tools-fork
     pwd
     ls -la
-    docker build -t codelabs_base:latest .
+    docker build --cache-from=gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest -t codelabs_base:latest .
     docker tag codelabs_base:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest
     docker tag codelabs_base:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:$COMMIT_SHA
     docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest)
@@ -102,7 +102,7 @@ steps:
     docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$(cat IMAGE_TAG)
   
 # These are images that pushed as well
-images: [gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest',
+images: ['gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest',
         'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:latest',
         'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$COMMIT_SHA']
 
