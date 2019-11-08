@@ -112,7 +112,7 @@ steps:
   - '-c'
   - |
     cd $REPO_NAME
-    docker tag gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$(cat IMAGE_TAG)
+    docker tag gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$(cat IMAGE_TAG)
     docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$(cat IMAGE_TAG)
   
 # These are images that pushed as well
