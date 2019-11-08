@@ -20,6 +20,7 @@ echo "Modifying the site"
 cp ./assets/core_platform.png ../app/images/icons/core_platform.png
 cp ./assets/terraform.png ../app/images/icons/terraform.png
 cp ./assets/logo.png ../app/images/logo.png
+cp ./assets/modules_laboratory.png ../app/images/modules_laboratory.png
 
 cat ./assets/extra_styles.css >> ../app/styles/_categories.scss
 
