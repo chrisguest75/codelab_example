@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+echo "process-labs.sh"
+pwd 
+ls -a
+
 echo "Process markdown files"
 for f in *.md; do 
     $GOPATH/bin/claat export $f
