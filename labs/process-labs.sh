@@ -23,7 +23,7 @@ cp ./assets/logo.png ../app/images/logo.png
 # Copy icons
 cp ./assets/core_platform.png ../app/images/icons/core_platform.png
 cp ./assets/terraform.png ../app/images/icons/terraform.png
-cp ./assets/modules_laboratory.png ../app/icons/modules_laboratory.png
+cp ./assets/modules_laboratory.png ../app/images/icons/modules_laboratory.png
 
 # Append css
 cat ./assets/extra_styles.css >> ../app/styles/_categories.scss
