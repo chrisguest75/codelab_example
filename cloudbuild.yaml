@@ -3,6 +3,7 @@ substitutions:
   _GITHUB_USERNAME: "chrisguest75" 
   #_CONTAINER_SUBFOLDER: "codelabs" 
 
+timeout: "1200.0s"
 steps:
 # Show some debug info - current state of folder.
 - name: 'gcr.io/cloud-builders/git'
@@ -58,40 +59,12 @@ steps:
     cd $REPO_NAME/codelab-tools-fork
     pwd
     ls -la
-    docker build -t codelabs_base:latest .
+    docker build --cache-from=gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest -t codelabs_base:latest .
+    docker tag codelabs_base:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest
+    docker tag codelabs_base:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:$COMMIT_SHA
+    docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest
 
   # TODO: This has an issue that it might have had another commit since build trigger.  
-  #- './$REPO_NAME/hellonode'
-# Retag latest with git sha 
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag',
-    'codelabs_base:latest',
-    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:$COMMIT_SHA']
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag',
-    'codelabs_base:latest',
-    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest']
-
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: /bin/bash
-  args:
-  - '-c'
-  - |
-    cd $REPO_NAME
-    pwd
-    ls -la
-    docker build -t codelabs:latest -f Dockerfile.codelabs .    
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag',
-    'codelabs:latest',
-    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$COMMIT_SHA']
-
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['tag',
-    'codelabs:latest',
-    'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:latest']
 
 # Create semver tag 
 # TODO: Need to filter height from the commitid as another commit might have sneaked in after trigger fired.
@@ -104,20 +77,26 @@ steps:
     pwd
     ls -la
     echo ${_TWO_PART_VERSION}.$(git rev-list --count ${BRANCH_NAME}) > IMAGE_TAG
-  
-# Push semver image - should all be cached
-- name: gcr.io/cloud-builders/docker
+
+# This uses the base image
+- name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
   args:
   - '-c'
   - |
     cd $REPO_NAME
-    docker tag gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$(cat IMAGE_TAG)
-    docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$(cat IMAGE_TAG)
+    pwd
+    ls -la
+    docker build -t codelabs:latest -f Dockerfile.codelabs .    
+    docker tag codelabs:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:latest
+    docker tag codelabs:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$COMMIT_SHA
+    docker tag gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:latest gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$(cat IMAGE_TAG)
+    docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:latest
+    docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$COMMIT_SHA
+    docker push gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$(cat IMAGE_TAG)
   
 # These are images that pushed as well
-images: ['gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:latest',
-        'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs:$COMMIT_SHA']
+images: ['gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_base:latest',
+        'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:latest',
+        'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$COMMIT_SHA']
 
-
-        # Retag latest with git sha 
