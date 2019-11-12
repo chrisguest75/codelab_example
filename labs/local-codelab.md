@@ -67,12 +67,3 @@ You should see a screen like the following.
 ![Codelabs](./assets/example_landing_page.png)
 
 
-<!-- ------------------------ -->
-## Host on Kind
-Duration: 10
-
-### Add markdown
-```
-GO111MODULE="on" go get sigs.k8s.io/kind@v0.4.0
-$(go env GOPATH)/bin/kind create cluster
-```
