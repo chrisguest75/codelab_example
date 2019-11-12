@@ -25,3 +25,18 @@ This installs some prerequisites tools for building the labs.
 It requires the [process-labs.sh](labs/process-labs.sh) script to convert the markdown.  
 
 The output in the ./dist folder is then put into a container hosting static content.
+
+
+## Testing on Kind
+
+
+```
+GO111MODULE="on" go get sigs.k8s.io/kind@v0.5.1
+$(go env GOPATH)/bin/kind create cluster
+export KUBECONFIG="$($(go env GOPATH)/bin/kind get kubeconfig-path --name="kind")"
+```
+
+```
+skaffold run
+skaffold delete
+```

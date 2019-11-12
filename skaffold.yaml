@@ -1,0 +1,13 @@
+apiVersion: skaffold/v1
+kind: Config
+metadata:
+  name: codelabs-example
+build:
+  artifacts:
+  - image: gcr.io/open-source-01/codelab_example/codelabs_skaffold
+    docker:
+      dockerfile: Dockerfile.codelabs
+deploy:
+  kubectl:
+    manifests:
+    - k8s/deployment.yaml
