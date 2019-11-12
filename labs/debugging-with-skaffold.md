@@ -6,7 +6,11 @@ status: Published
 authors: ChrisGuest
 Feedback Link: mailto:chris.guest
 <!-- copied from  -->
-
+<!--
+TODO: 
+* Add clean up kind cluster instructions 
+* 
+-->
 
 # Debugging with Skaffold
 <!-- ------------------------ -->
@@ -77,11 +81,22 @@ To build the base container used to build the example codelabs.
 ./build_base.sh
 ```
 
+### Install Skaffold
+Install Skaffold cli tool.  
+```
+brew install skaffold
+```
+
+### Skaffold.yaml
+If you open skaffold.yaml in the repo you can see it use the ./k8s/deployment.yaml Helm chart to deploy. 
+
 ### Deploying
 Once the base is built you can deploy to the Kind cluster using Skaffold.  
 ```
 skaffold deploy
 ```
+
+
 
 
 <!-- ------------------------ -->
