@@ -1,5 +1,5 @@
-summary: Building Codelabs
-id: building-codelabs
+summary: Creating Codelabs Locally
+id: creating-codelabs
 categories: codelabs
 tags: build 
 status: Published 
@@ -7,9 +7,7 @@ authors: ChrisGuest
 Feedback Link: mailto:chris.guest
 <!-- copied from  -->
 
-# TODO: auto build using skaffold
-
-# Building CodeLabs
+# Building CodeLabs Locally 
 <!-- ------------------------ -->
 ## Overview 
 Duration: 1
@@ -70,49 +68,11 @@ You should see a screen like the following.
 
 
 <!-- ------------------------ -->
-## Add a new lab
+## Host on Kind
 Duration: 10
 
 ### Add markdown
-Go to the ./labs folder and add a new markdown file
-
 ```
-summary: My First Codelab
-id: myfirst-codelab
-categories: codelabs
-tags: build 
-status: Published 
-authors: Your name
-Feedback Link: mailto:your.name
-
-# My First CodeLob
-<!-- ------------------------ -->
-## Overview 
-Duration: 1
-
-### Information  
-
-
-<!-- ------------------------ -->
-## Second page
-Duration: 1
-
-### Information  
-
+GO111MODULE="on" go get sigs.k8s.io/kind@v0.4.0
+$(go env GOPATH)/bin/kind create cluster
 ```
-
-
-<!-- ------------------------ -->
-## How it works
-Duration: 10
-
-### Defaults
-The default is configured to use my fork of the CodeLabs project.
-
-It uses the funky git based docker context with the Dockerfile in the repo.  
-This installs some prerequisites tools for building the labs.  
-
-It requires the [process-labs.sh](labs/process-labs.sh) script to convert the markdown.  
-
-The output in the ./dist folder is then put into a container hosting static content.
-
