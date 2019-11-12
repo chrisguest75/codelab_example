@@ -114,7 +114,10 @@ skaffold dev --port-forward
 open http://localhost:8080
 ```
 
-NOTE: cmd+shift+r on Mac to refresh the crash
+The page should look simiilar to the following picture.
+![Codelabs](./assets/example_landing_page.png)
+
+NOTE: Use cmd+shift+r on Mac Chrome to refresh the cache  
 
 
 <!-- ------------------------ -->
