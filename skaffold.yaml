@@ -1,0 +1,27 @@
+apiVersion: skaffold/v1
+kind: Config
+
+metadata:
+  name: codelabs-example
+
+build:
+  local:
+    push: true
+  artifacts:
+  - image: gcr.io/open-source-01/codelab_example/codelabs_skaffold
+    docker:
+      dockerfile: Dockerfile.codelabs
+  tagPolicy:
+    sha256: {}
+
+deploy:
+  kubectl:
+    manifests:
+    - k8s/deployment.yaml
+
+portForward:
+- resourceType: deployment
+  resourceName: skaffoldtest
+  namespace: skaffolddebug
+  port: 8080
+  localPort: 8080

@@ -1,0 +1,41 @@
+# yaml resource file for deployment from skaffold
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "skaffolddebug"
+  labels: 
+    name: "skaffolddebug"
+        
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "skaffoldtest"
+  namespace: skaffolddebug  
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: skaffoldtest
+        track: stable
+        version: 0.1.0
+    spec:
+      containers:
+        - name: skaffoldtest
+          image: gcr.io/open-source-01/codelab_example/codelabs_skaffold
+          imagePullPolicy: Always
+          ports:
+            - name: api
+              containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
+
+          resources:
+            limits:
+              cpu: "1"            
+            requests:
+              cpu: "10m"
+
