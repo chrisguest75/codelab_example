@@ -23,6 +23,9 @@ Walking through these steps will allow you build your own container and add your
 ### How it works
 We use the [Codelabs](https://codelabs.developers.google.com/) to build a base container, passing it into a multistage build that processes markdown files to build a final static hosted web folder in an nginx container.  
 
+It requires the [process-labs.sh](labs/process-labs.sh) script to convert the markdown and copy across images, icons and append css.  
+
+The processed output in the ./dist folder is then put into a container hosting static content (using nginx).
 
 <!-- ------------------------ -->
 ## Clone or fork the repo 
@@ -99,20 +102,27 @@ Duration: 1
 
 ```
 
-
 <!-- ------------------------ -->
-## How it works
+## Adding images
 Duration: 10
 
-### Defaults
-The default is configured to use my fork of the CodeLabs project.
+### Add an image to your labs
+Go to the ./labs/assets folder and add a png picture. 
 
-It uses the funky git based docker context with the Dockerfile in the repo.  
-This installs some prerequisites tools for building the labs.  
+Add a reference to it in the markdown. 
+```
+![Your picture](./assets/your_picture.png)
+```
 
-It requires the [process-labs.sh](labs/process-labs.sh) script to convert the markdown.  
+### Resizing
+Install and use imagemagick to resize images
+```
+brew install imagemagick
+```
 
-The output in the ./dist folder is then put into a container hosting static content.
+```
+mogrify -resize 50% ./assets/your_picture.png
+```
 
 <!-- ------------------------ -->
 ## Congratulations
