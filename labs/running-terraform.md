@@ -21,4 +21,10 @@ This information is taken from the
 ### Summary
 This is terraform
 
+<!-- ------------------------ -->
+## Congratulations
+Duration: 5
+
+### Key Skills
+In this lab you successfully learnt how to create, configure and run terraform.
 

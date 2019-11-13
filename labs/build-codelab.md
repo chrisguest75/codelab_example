@@ -7,8 +7,6 @@ authors: ChrisGuest
 Feedback Link: mailto:chris.guest
 <!-- copied from  -->
 
-# TODO: auto build using skaffold
-
 # Building CodeLabs
 <!-- ------------------------ -->
 ## Overview 
@@ -116,3 +114,9 @@ It requires the [process-labs.sh](labs/process-labs.sh) script to convert the ma
 
 The output in the ./dist folder is then put into a container hosting static content.
 
+<!-- ------------------------ -->
+## Congratulations
+Duration: 5
+
+### Key Skills
+You have now added your own lab.  Use your new found knowledge to build out more.

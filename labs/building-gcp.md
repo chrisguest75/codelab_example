@@ -1,5 +1,5 @@
-summary: Creating Codelabs Locally
-id: creating-codelabs
+summary: Building GCP
+id: building-gcp
 categories: codelabs
 tags: build 
 status: Published 
@@ -7,7 +7,7 @@ authors: ChrisGuest
 Feedback Link: mailto:chris.guest
 <!-- copied from  -->
 
-# Building CodeLabs Locally 
+# Building CodeLabs in GCP
 <!-- ------------------------ -->
 ## Overview 
 Duration: 1
@@ -68,9 +68,49 @@ You should see a screen like the following.
 
 
 <!-- ------------------------ -->
-## Congratulations
-Duration: 5
+## Add a new lab
+Duration: 10
 
-### Built
-You now have the ability to build and host the labs locally.
-This will allow you to quickly build and test changes to your labs.  
+### Add markdown
+Go to the ./labs folder and add a new markdown file
+
+```
+summary: My First Codelab
+id: myfirst-codelab
+categories: codelabs
+tags: build 
+status: Published 
+authors: Your name
+Feedback Link: mailto:your.name
+
+# My First CodeLob
+<!-- ------------------------ -->
+## Overview 
+Duration: 1
+
+### Information  
+
+
+<!-- ------------------------ -->
+## Second page
+Duration: 1
+
+### Information  
+
+```
+
+
+<!-- ------------------------ -->
+## How it works
+Duration: 10
+
+### Defaults
+The default is configured to use my fork of the CodeLabs project.
+
+It uses the funky git based docker context with the Dockerfile in the repo.  
+This installs some prerequisites tools for building the labs.  
+
+It requires the [process-labs.sh](labs/process-labs.sh) script to convert the markdown.  
+
+The output in the ./dist folder is then put into a container hosting static content.
+
