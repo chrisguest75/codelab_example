@@ -15,4 +15,13 @@ Feedback Link: mailto:chris.guest@condenast.com
 Duration: 1
 
 ### What You’ll Learn 
-- 
+- How to create a user for the VPN
+- How to connect to the VPN
+
+
+<!-- ------------------------ -->
+## Congratulations
+Duration: 5
+
+### Connected
+You should now be able to connect to the corporate VPN and use the internal services. 

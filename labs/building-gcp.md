@@ -1,5 +1,5 @@
-summary: Creating Codelabs Locally
-id: creating-codelabs
+summary: Building GCP
+id: building-gcp
 categories: codelabs
 tags: build 
 status: Published 
@@ -7,7 +7,7 @@ authors: ChrisGuest
 Feedback Link: mailto:chris.guest
 <!-- copied from  -->
 
-# Building CodeLabs Locally 
+# Building CodeLabs in GCP
 <!-- ------------------------ -->
 ## Overview 
 Duration: 1
@@ -26,7 +26,7 @@ We use the [Codelabs](https://codelabs.developers.google.com/) to build a base c
 
 <!-- ------------------------ -->
 ## Clone or fork the repo 
-Duration: 5
+Duration: 10
 
 ### Fork
 You can use github to fork the repo into your own account.  
@@ -47,7 +47,7 @@ git push
 
 <!-- ------------------------ -->
 ## Build it locally
-Duration: 5
+Duration: 15
 
 ### Building
 To build the base container used to build the example codelabs.  The base container will use the [Codelabs](https://codelabs.developers.google.com/) repo. It will install some necessary tools (claat) and set a structure to process a set of markdown defined codelabs.  
@@ -62,15 +62,16 @@ To rebuild the codelabs using the base container.  It will also run and host on 
 ./build_codelabs.sh
 ```
 
-You should see a screen like the following.
+Once running you'll need to map port 8000 using the preview on port feature of the GCP console.  
+![Preview on Port](./assets/gcp_preview_on_port.png)  
 
-![Codelabs](./assets/example_landing_page.png)
-
+Now you should see a screen like the following.
+![CodeLabs](./assets/example_landing_page.png)
 
 <!-- ------------------------ -->
 ## Congratulations
 Duration: 5
 
-### Built
-You now have the ability to build and host the labs locally.
-This will allow you to quickly build and test changes to your labs.  
+### Key Skills
+You have now build, hosted locally on the GCP console.
+

@@ -12,7 +12,7 @@ Feedback Link: mailto:chris.guest
 Duration: 1
 
 ### What You’ll Learn 
-- Configuring a repo f
+- Configuring a repo for the organisation
 - Creating docker images 
 - Creating a service namespace
 - Using launch readiness
@@ -33,5 +33,11 @@ Duration: 10
 }
 ```
 
-[link to google](https://www.google.com))
+[google.com](https://www.google.com))
 
+<!-- ------------------------ -->
+## Congratulations
+Duration: 5
+
+### Key Skills
+In this lab you learned how to deploy services to the organisation cluster.
