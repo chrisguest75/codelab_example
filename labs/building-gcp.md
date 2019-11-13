@@ -63,10 +63,10 @@ To rebuild the codelabs using the base container.  It will also run and host on 
 ```
 
 Once running you'll need to map port 8000 using the preview on port feature of the GCP console.  
-<img src="./assets/gcp_preview_on_port.png" width="50%">   
+![Preview on Port](./assets/gcp_preview_on_port.png)  
 
 Now you should see a screen like the following.
-<img src="./assets/example_landing_page.png" width="90%">   
+![CodeLabs](./assets/example_landing_page.png)
 
 <!-- ------------------------ -->
 ## Congratulations
