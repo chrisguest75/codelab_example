@@ -98,7 +98,11 @@ steps:
 
   # Deploy container image to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
-    args:   ['beta', 'run', 'deploy', 'codelabs', '--image', 'gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$COMMIT_SHA', '--region', 'europe-west1','--platform', 'managed', '--quiet']
+    entrypoint: /bin/bash
+    args:  
+    - '-c'
+    - | 
+      gcloud beta run deploy codelabs --image gcr.io/$PROJECT_ID/$REPO_NAME/codelabs_$BRANCH_NAME:$COMMIT_SHA --region europe-west1 --platform managed --quiet
 
 
 # These are images that pushed as well
