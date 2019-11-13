@@ -26,7 +26,7 @@ We use the [Codelabs](https://codelabs.developers.google.com/) to build a base c
 
 <!-- ------------------------ -->
 ## Clone or fork the repo 
-Duration: 5
+Duration: 10
 
 ### Fork
 You can use github to fork the repo into your own account.  
@@ -47,7 +47,7 @@ git push
 
 <!-- ------------------------ -->
 ## Build it locally
-Duration: 5
+Duration: 15
 
 ### Building
 To build the base container used to build the example codelabs.  The base container will use the [Codelabs](https://codelabs.developers.google.com/) repo. It will install some necessary tools (claat) and set a structure to process a set of markdown defined codelabs.  
@@ -62,55 +62,16 @@ To rebuild the codelabs using the base container.  It will also run and host on 
 ./build_codelabs.sh
 ```
 
-You should see a screen like the following.
+Once running you'll need to map port 8000 using the preview on port feature of the GCP console.  
+<img src="./assets/gcp_preview_on_port.png" width="50%">   
 
-![Codelabs](./assets/example_landing_page.png)
-
-
-<!-- ------------------------ -->
-## Add a new lab
-Duration: 10
-
-### Add markdown
-Go to the ./labs folder and add a new markdown file
-
-```
-summary: My First Codelab
-id: myfirst-codelab
-categories: codelabs
-tags: build 
-status: Published 
-authors: Your name
-Feedback Link: mailto:your.name
-
-# My First CodeLob
-<!-- ------------------------ -->
-## Overview 
-Duration: 1
-
-### Information  
-
+Now you should see a screen like the following.
+<img src="./assets/example_landing_page.png" width="90%">   
 
 <!-- ------------------------ -->
-## Second page
-Duration: 1
+## Congratulations
+Duration: 5
 
-### Information  
-
-```
-
-
-<!-- ------------------------ -->
-## How it works
-Duration: 10
-
-### Defaults
-The default is configured to use my fork of the CodeLabs project.
-
-It uses the funky git based docker context with the Dockerfile in the repo.  
-This installs some prerequisites tools for building the labs.  
-
-It requires the [process-labs.sh](labs/process-labs.sh) script to convert the markdown.  
-
-The output in the ./dist folder is then put into a container hosting static content.
+### Key Skills
+You have now build, hosted locally on the GCP console.
 
