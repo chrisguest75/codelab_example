@@ -69,6 +69,34 @@ Now you should see a screen like the following.
 ![CodeLabs](./assets/example_landing_page.png)
 
 <!-- ------------------------ -->
+## Deploying local version
+Duration: 15
+
+### Pushing to GCR
+We now retag the image for the GCR and push it.  Cloud Shell is already authed for me.  No docker login required.   
+```
+docker tag codelabs:latest gcr.io/open-source-01/codelab_example/codelabs_cloudshell:latest
+docker push gcr.io/open-source-01/codelab_example/codelabs_cloudshell:latest
+```
+
+### Deploy to CloudRun
+We can now deploy to Cloud Run.
+```
+gcloud beta run deploy codelabs --image gcr.io/open-source-01/codelab_example/codelabs_cloudshell:latest --region europe-west1 --platform managed 
+```
+
+<!-- ------------------------ -->
+## Submit build to Cloud Build
+Duration: 15
+
+### Building
+Building with Cloud Build 
+```
+gcloud builds submit --project open-source-01 --substitutions=COMMIT_SHA=test,BRANCH_NAME=cloudbuild,REPO_NAME=codelab_example
+```
+
+
+<!-- ------------------------ -->
 ## Congratulations
 Duration: 5
 
