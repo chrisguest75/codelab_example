@@ -12,7 +12,7 @@ Feedback Link: mailto:chris.guest
 ## Overview 
 Duration: 1
 
-### Information  from doxmouth
+### Information
 Codelabs are a great way of walking new starters and employees through team processes and conventions.
 The public [Codelabs](https://codelabs.developers.google.com/) can be used to learn anything from Tensorflow through to using Cloud APIs.
 
